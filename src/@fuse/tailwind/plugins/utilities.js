@@ -11,6 +11,9 @@ const utilities = plugin(({
     */
     addComponents(
         {
+            '.mat-form-field-flex' : {
+                '--tw-shadow': 'none !important',
+            },
             '.mat-icon'       : {
                 '--tw-text-opacity': '1',
                 color              : 'rgba(var(--fuse-mat-icon-rgb), var(--tw-text-opacity))'

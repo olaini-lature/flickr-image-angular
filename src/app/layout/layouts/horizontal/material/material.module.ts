@@ -15,12 +15,15 @@ import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { MaterialLayoutComponent } from 'app/layout/layouts/horizontal/material/material.component';
+import { SchemeModule } from 'app/layout/common/scheme/scheme.module';
+import { LoginModule } from 'app/layout/common/login/login.module';
+import { MaterialModule } from 'app/material.module';
 
 @NgModule({
     declarations: [
         MaterialLayoutComponent
     ],
-    imports     : [
+    imports: [
         HttpClientModule,
         RouterModule,
         MatButtonModule,
@@ -35,12 +38,14 @@ import { MaterialLayoutComponent } from 'app/layout/layouts/horizontal/material/
         SearchModule,
         ShortcutsModule,
         UserModule,
-        SharedModule
+        SharedModule,
+        SchemeModule,
+        LoginModule,
+        MaterialModule
     ],
-    exports     : [
+    exports: [
         MaterialLayoutComponent
     ]
 })
-export class MaterialLayoutModule
-{
+export class MaterialLayoutModule {
 }

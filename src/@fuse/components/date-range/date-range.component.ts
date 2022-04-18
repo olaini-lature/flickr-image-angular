@@ -6,6 +6,7 @@ import { MatCalendarCellCssClasses, MatMonthView } from '@angular/material/datep
 import { Subject } from 'rxjs';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector     : 'fuse-date-range',
@@ -50,6 +51,8 @@ export class FuseDateRangeComponent implements ControlValueAccessor, OnInit, OnD
     private readonly _timeRegExp: RegExp = new RegExp('^(0[0-9]|1[0-9]|2[0-4]|[0-9]):([0-5][0-9])(A|(?:AM)|P|(?:PM))?$', 'i');
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    activeLang = '';
+
     /**
      * Constructor
      */
@@ -58,7 +61,8 @@ export class FuseDateRangeComponent implements ControlValueAccessor, OnInit, OnD
         private _elementRef: ElementRef,
         private _overlay: Overlay,
         private _renderer2: Renderer2,
-        private _viewContainerRef: ViewContainerRef
+        private _viewContainerRef: ViewContainerRef,
+        private _translocoService: TranslocoService
     )
     {
         this._onChange = (): void => {
@@ -349,6 +353,19 @@ export class FuseDateRangeComponent implements ControlValueAccessor, OnInit, OnD
     ngOnInit(): void
     {
 
+        this._translocoService.langChanges$.subscribe((activeLang) => {
+
+            // Get the active lang
+            this.activeLang = activeLang;
+
+            this.activeDates.month1.locale(activeLang);
+            this.activeDates.month2.locale(activeLang);
+            this._range.start.locale(activeLang);
+            this._range.end.locale(activeLang);
+
+            console.log('dateRange range: ', this.range);
+        });
+
     }
 
     /**
@@ -492,6 +509,7 @@ export class FuseDateRangeComponent implements ControlValueAccessor, OnInit, OnD
      */
     onSelectedDateChange(date: Moment): void
     {
+        console.log('onSelectedDateChange: ', date);
         // Create a new range object
         const newRange = {
             start    : this._range.start.clone().toISOString(),
@@ -545,6 +563,7 @@ export class FuseDateRangeComponent implements ControlValueAccessor, OnInit, OnD
      */
     updateStartTime(event): void
     {
+        console.log('updateStartTime: ', event);
         // Parse the time
         const parsedTime = this._parseTime(event.target.value);
 
@@ -649,6 +668,9 @@ export class FuseDateRangeComponent implements ControlValueAccessor, OnInit, OnD
             start: moment().startOf('day').toISOString(),
             end  : moment().add(1, 'day').endOf('day').toISOString()
         };
+
+        console.log('onInit range: ', this.range);
+        console.log('onInit _range: ', this._range);
 
         // Set the default time range
         this._programmaticChange = true;

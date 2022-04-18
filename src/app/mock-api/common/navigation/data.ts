@@ -1,39 +1,8 @@
-/* tslint:disable:max-line-length */
+/* eslint-disable */
 import { FuseNavigationItem } from '@fuse/components/navigation';
+import { customCompactNavigation, customDefaultNavigation } from 'app/services/navigation.service';
 
-export const defaultNavigation: FuseNavigationItem[] = [
-    {
-        id   : 'example',
-        title: 'Example',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
-    }
-];
-export const compactNavigation: FuseNavigationItem[] = [
-    {
-        id   : 'example',
-        title: 'Example',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
-    }
-];
-export const futuristicNavigation: FuseNavigationItem[] = [
-    {
-        id   : 'example',
-        title: 'Example',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
-    }
-];
-export const horizontalNavigation: FuseNavigationItem[] = [
-    {
-        id   : 'example',
-        title: 'Example',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/example'
-    }
-];
+export const defaultNavigation: FuseNavigationItem[] = customDefaultNavigation;
+export const compactNavigation: FuseNavigationItem[] = customCompactNavigation;
+export const futuristicNavigation: FuseNavigationItem[] = [];
+export const horizontalNavigation: FuseNavigationItem[] = [];
