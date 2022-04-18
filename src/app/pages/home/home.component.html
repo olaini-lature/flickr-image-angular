@@ -1,0 +1,72 @@
+<div class="flex flex-col w-full items-center justify-content-start p-1O sm:p-10 md:p-12">
+
+    <div class="flex flex-row justify-center w-full items-center flex-wrap" *ngIf="isLoading && !images ">
+        <ng-container *ngFor="let skeleton of skeletons">
+            <ngx-skeleton-loader animation="pulse" [theme]="{
+                    'border-radius': '5px',
+                    height: '224px',
+                    width: '224px',
+                    'background-color': '#bfbfbf',
+                    border: '1px solid white',
+                    'margin': '4px'}">
+            </ngx-skeleton-loader>
+        </ng-container>
+    </div>
+
+    <ng-container *ngIf="!isLoading && images && images !== 'error' && images.items.length > 0">
+        <div class="flex flex-row p-2 rounded-xl bg-gray-200 dark:bg-gray-700 min-w-44 sm:min-w-44 md:min-w-64">
+            <mat-icon class="icon-size-5 mr-2" svgIcon="heroicons_solid:search"></mat-icon>
+            <input [formControl]="searchInputControl" class="w-full" [autocomplete]="'off'"
+                [placeholder]="t('search-department')" (keyup)="detectSearch()">
+            <mat-icon class="icon-size-5 ml-2 cursor-pointer" svgIcon="heroicons_solid:x" (click)="clearSearch()"
+                [ngClass]="(searchInputControl.value === null || searchInputControl.value === '') ? 'invisible' : 'visible'">
+            </mat-icon>
+        </div>
+
+        <div class="flex flex-row justify-center w-full items-center flex-wrap">
+            <ng-container *ngFor="let image of chunkImages">
+                <div class="relative h-56 w-56 border m-1 rounded cursor-pointer hover:border-blue-500 hover:shadow-lg"
+                    #tooltip="matTooltip" matTooltip="Click for more detail">
+                    <img [src]="image.media.m" class="w-full h-full object-cover rounded">
+
+                    <div
+                        class="flex flex-row justify-center items-center absolute bottom-0 w-full bg-gray-900 dark:bg-gray-600 h-8 rounded-bl rounded-br opacity-80 p-2">
+                        <div class="text-white truncate w-full">
+                            {{ image.title }}
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+        <div class="flex flex-row w-full mt-12 justify-between">
+            <button mat-stroked-button color="primary" [disabled]="currentPageIndex === 0"
+                (click)="getPreviousImages()">Previous</button>
+            <button mat-stroked-button color="primary" [disabled]="currentPageIndex === maxPageIndex"
+                (click)="getNextImages()">Next</button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading && images && images !== 'error' && images.items.length === 0">
+        <div class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
+            No Image Found
+        </div>
+        <div class="flex flex-col items-center w-full pt-4">
+            <button class="mt-4" mat-flat-button [color]="'primary'" (click)="searchChanged()">
+                Try Again
+            </button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading && images && images === 'error'">
+        <div class="p-8 sm:p-16 text-4xl font-semibold tracking-tight text-center">
+            An Error Occur
+        </div>
+        <div class="flex flex-col items-center w-full pt-4">
+            <button class="mt-4" mat-flat-button [color]="'primary'" (click)="searchChanged()">
+                Try Again
+            </button>
+        </div>
+    </ng-container>
+
+</div>
