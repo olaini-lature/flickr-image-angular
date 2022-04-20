@@ -17,6 +17,7 @@ interface Image {
 export class ImagePreviewService {
     images: Array<Image>;
     selectedIndex = 0;
+    isOpened = false;
     private overlayRef: OverlayRef = null;
 
     constructor(private overlay: Overlay) {}
@@ -36,6 +37,7 @@ export class ImagePreviewService {
 
         const loaderOverlay = new ComponentPortal(ImagePreviewOverlayComponent);
         this.overlayRef.attach(loaderOverlay);
+        this.isOpened = true;
     }
 
     async close(): Promise<any> {
@@ -44,5 +46,6 @@ export class ImagePreviewService {
         }
 
         this.images = [];
+        this.isOpened = false;
     }
 }

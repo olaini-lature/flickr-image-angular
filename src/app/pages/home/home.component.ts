@@ -52,15 +52,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     handleKeyboardEvent(event: KeyboardEvent): any {
         const charCode = event.which ? event.which : event.keyCode;
 
-        if (charCode === 37) {
-            // left
-            if (this.currentPageIndex !== 0) {
-                this.getPreviousImages();
-            }
-        } else if (charCode === 39) {
-            // right
-            if (this.currentPageIndex !== this.maxPageIndex) {
-                this.getNextImages();
+        if (!this._imagePreviewService.isOpened) {
+            if (charCode === 37) {
+                // left
+                if (this.currentPageIndex !== 0) {
+                    this.getPreviousImages();
+                }
+            } else if (charCode === 39) {
+                // right
+                if (this.currentPageIndex !== this.maxPageIndex) {
+                    this.getNextImages();
+                }
             }
         }
     }
