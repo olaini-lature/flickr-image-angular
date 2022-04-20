@@ -1,0 +1,43 @@
+<div class="absolute right-2 top-2 z-9999">
+    <button mat-icon-button class="rounded-full bg-accent-500" (click)="closePreview()">
+        <mat-icon class="text-white font-bold icon-size-10 cursor-pointer">
+            close
+        </mat-icon>
+    </button>
+</div>
+
+<div class="absolute left-2 top-1/2 z-9999" *ngIf="images.length > 1">
+    <button mat-icon-button class="rounded-full bg-accent-500" (click)="prevImage()">
+        <mat-icon class="text-white font-bold icon-size-10 cursor-pointer">
+            chevron_left
+        </mat-icon>
+    </button>
+</div>
+
+<div class="absolute right-2 top-1/2 z-9999" *ngIf="images.length > 1">
+    <button mat-icon-button class="rounded-full bg-accent-500" (click)="nextImage()">
+        <mat-icon class="text-white font-bold icon-size-10 cursor-pointer">
+            chevron_right
+        </mat-icon>
+    </button>
+</div>
+
+
+<ng-container *ngFor="let image of images; let i = index;">
+    <div class="flex flex-col justify-center items-center h-full w-full px-4" *ngIf="i === selectedIndex">
+
+        <div class="flex flex-row justify-center items-center w-full text-white text-xl font-medium mb-8">
+            {{ image.title }}
+        </div>
+
+        <pinch-zoom overflow="visible" disableZoomControl="disable" [draggableImage]="true"
+            [limit-zoom]="100" backgroundColor="transparent">
+            <img draggable="true" [src]="image.src" [alt]="image.alt">
+        </pinch-zoom>
+
+        <div class="flex flex-row justify-center items-center w-full text-white font-light mt-8">
+            {{ image.author }}
+        </div>
+
+    </div>
+</ng-container>

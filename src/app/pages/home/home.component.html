@@ -1,5 +1,14 @@
 <div class="flex flex-col w-full items-center justify-content-start p-1O sm:p-10 md:p-12">
 
+    <div class="flex flex-row p-2 rounded-xl bg-gray-200 dark:bg-gray-700 min-w-44 sm:min-w-44 md:min-w-64 mb-6">
+        <mat-icon class="icon-size-5 mr-2" svgIcon="heroicons_solid:search"></mat-icon>
+        <input [formControl]="searchInputControl" class="w-full" [autocomplete]="'off'"
+            placeholder="Search" (keyup)="detectSearch()">
+        <mat-icon class="icon-size-5 ml-2 cursor-pointer" svgIcon="heroicons_solid:x" (click)="clearSearch()"
+            [ngClass]="(searchInputControl.value === null || searchInputControl.value === '') ? 'invisible' : 'visible'">
+        </mat-icon>
+    </div>
+
     <div class="flex flex-row justify-center w-full items-center flex-wrap" *ngIf="isLoading && !images ">
         <ng-container *ngFor="let skeleton of skeletons">
             <ngx-skeleton-loader animation="pulse" [theme]="{
@@ -14,18 +23,10 @@
     </div>
 
     <ng-container *ngIf="!isLoading && images && images !== 'error' && images.items.length > 0">
-        <div class="flex flex-row p-2 rounded-xl bg-gray-200 dark:bg-gray-700 min-w-44 sm:min-w-44 md:min-w-64">
-            <mat-icon class="icon-size-5 mr-2" svgIcon="heroicons_solid:search"></mat-icon>
-            <input [formControl]="searchInputControl" class="w-full" [autocomplete]="'off'"
-                [placeholder]="t('search-department')" (keyup)="detectSearch()">
-            <mat-icon class="icon-size-5 ml-2 cursor-pointer" svgIcon="heroicons_solid:x" (click)="clearSearch()"
-                [ngClass]="(searchInputControl.value === null || searchInputControl.value === '') ? 'invisible' : 'visible'">
-            </mat-icon>
-        </div>
 
         <div class="flex flex-row justify-center w-full items-center flex-wrap">
             <ng-container *ngFor="let image of chunkImages">
-                <div class="relative h-56 w-56 border m-1 rounded cursor-pointer hover:border-blue-500 hover:shadow-lg"
+                <div class="relative h-56 w-56 border m-1 rounded cursor-pointer hover:border-blue-500 hover:shadow-lg" (click)="previewImage(image)"
                     #tooltip="matTooltip" matTooltip="Click for more detail">
                     <img [src]="image.media.m" class="w-full h-full object-cover rounded">
 
